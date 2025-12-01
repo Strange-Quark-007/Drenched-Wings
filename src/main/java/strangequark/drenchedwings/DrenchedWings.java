@@ -3,10 +3,8 @@ package strangequark.drenchedwings;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -14,8 +12,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,27 +65,9 @@ public class DrenchedWings implements ModInitializer {
         EntityElytraEvents.ALLOW.register(entity -> {
             if (entity instanceof Player player) {
                 var elytraStack = player.getItemBySlot(EquipmentSlot.CHEST);
-
                 return !player.getCooldowns().isOnCooldown(elytraStack);
             }
             return true;
-        });
-
-
-        UseEntityCallback.EVENT.register((player, level, interactionHand, entity, entityHitResult) -> {
-            if (entityHitResult == null) {
-                return InteractionResult.PASS;
-            }
-
-            var itemStack = player.getItemInHand(interactionHand);
-            var potionContents = itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
-            if (potionContents.is(Potions.WATER)) {
-                var hitEntity = entityHitResult.getEntity();
-                if (hitEntity instanceof ServerPlayer playerHit) {
-                    playerHit.getCooldowns().addCooldown(new ItemStack(Items.ELYTRA), COOLDOWN_SECONDS * 20);
-                }
-            }
-            return InteractionResult.PASS;
         });
     }
 }

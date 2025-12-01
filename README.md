@@ -1,7 +1,7 @@
 # Drenched Wings
 
-A Minecraft Fabric mod that adds liquid-based elytra restrictions, environmental nerfs, and cooldown mechanics, fully
-controlled through server game rules.
+Minecraft Fabric mod that blocks elytra use in liquids, applies environmental penalties, and enforces cooldowns.
+Fully configurable through server gamerules.
 
 Inspired by **cubfan135’s “[Minecraft’s Elytra Problem](https://www.youtube.com/watch?v=fBbtP9GZITM)”** — implements his
 proposed liquid-based Elytra limitations as a configurable, server-side Fabric mod.

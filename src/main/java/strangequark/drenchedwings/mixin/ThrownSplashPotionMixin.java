@@ -21,12 +21,13 @@ import static strangequark.drenchedwings.DrenchedWings.*;
 public class ThrownSplashPotionMixin {
     @Inject(method = "onHitAsWater", at = @At("HEAD"))
     private void onPotionHit(ServerLevel serverLevel, CallbackInfo ci) {
-        if (serverLevel.getGameRules().getBoolean(DO_ELYTRA_NERF) && !serverLevel.getGameRules().getBoolean(APPLY_ELYTRA_COOLDOWN_FROM_SPLASH_WATER)) {
+        if (!serverLevel.getGameRules().getBoolean(DO_ELYTRA_NERF) || !serverLevel.getGameRules().getBoolean(APPLY_ELYTRA_COOLDOWN_FROM_SPLASH_WATER)) {
             return;
         }
 
         Entity self = (Entity) (Object) this;
         AABB aABB = self.getBoundingBox().inflate(4.0, 2.0, 4.0);
+        ItemStack elytraStack = new ItemStack(Items.ELYTRA);
 
         for (LivingEntity livingEntity : serverLevel.getEntitiesOfClass(LivingEntity.class, aABB)) {
             if (!(livingEntity instanceof ServerPlayer player)) {
@@ -41,19 +42,19 @@ public class ThrownSplashPotionMixin {
                 ItemCooldowns cd = player.getCooldowns();
                 ItemCooldownsAccessor cdAcc = (ItemCooldownsAccessor) cd;
 
-                ResourceLocation resourceLocation = cd.getCooldownGroup(new ItemStack(Items.ELYTRA));
+                ResourceLocation resourceLocation = cd.getCooldownGroup(elytraStack);
                 Object instObj = cdAcc.getRawCooldowns().get(resourceLocation);
 
                 int now = cdAcc.getTickCount();
 
                 if (instObj == null) {
-                    cd.addCooldown(new ItemStack(Items.ELYTRA), scaledTicks);
+                    cd.addCooldown(elytraStack, scaledTicks);
                 } else {
                     int endTime = ((CooldownInstanceAccessor) instObj).getEndTime();
                     int remaining = endTime - now;
 
                     if (remaining < scaledTicks) {
-                        cd.addCooldown(new ItemStack(Items.ELYTRA), scaledTicks);
+                        cd.addCooldown(elytraStack, scaledTicks);
                     }
                 }
             }
