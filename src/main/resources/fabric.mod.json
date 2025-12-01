@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "drenched-wings",
+  "version": "${version}",
+  "name": "Drenched Wings",
+  "description": "Adds configurable cooldowns and environmental restrictions to Elytra, making flight more balanced without removing core mechanics.",
+  "authors": [
+    "Strange Quark!"
+  ],
+  "contact": {
+    "sources": "https://github.com/Strange-Quark-007/Drenched-Wings"
+  },
+  "license": "MIT",
+  "icon": "assets/drenchedwings/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "strangequark.drenchedwings.DrenchedWings"
+    ]
+  },
+  "mixins": ["drenchedwings.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.10",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

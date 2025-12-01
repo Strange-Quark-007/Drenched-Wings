@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "strangequark.drenchedwings.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["CooldownInstanceAccessor", "ItemCooldownsAccessor", "ThrownSplashPotionMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
