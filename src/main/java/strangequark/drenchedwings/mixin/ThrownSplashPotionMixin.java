@@ -1,11 +1,10 @@
 package strangequark.drenchedwings.mixin;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractThrownPotion;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static strangequark.drenchedwings.DrenchedWings.*;
 
-@Mixin(AbstractThrownPotion.class)
+@Mixin(net.minecraft.world.entity.projectile.throwableitemprojectile.AbstractThrownPotion.class)
 public class ThrownSplashPotionMixin {
     @Inject(method = "onHitAsWater", at = @At("HEAD"))
     private void onPotionHit(ServerLevel serverLevel, CallbackInfo ci) {
-        if (!serverLevel.getGameRules().getBoolean(DO_ELYTRA_NERF) || !serverLevel.getGameRules().getBoolean(APPLY_ELYTRA_COOLDOWN_FROM_SPLASH_WATER)) {
+        if (!serverLevel.getGameRules().get(DO_ELYTRA_NERF) || !serverLevel.getGameRules().get(APPLY_ELYTRA_COOLDOWN_FROM_SPLASH_WATER)) {
             return;
         }
 
@@ -42,8 +41,8 @@ public class ThrownSplashPotionMixin {
                 ItemCooldowns cd = player.getCooldowns();
                 ItemCooldownsAccessor cdAcc = (ItemCooldownsAccessor) cd;
 
-                ResourceLocation resourceLocation = cd.getCooldownGroup(elytraStack);
-                Object instObj = cdAcc.getRawCooldowns().get(resourceLocation);
+                Identifier resourceIdentifier = cd.getCooldownGroup(elytraStack);
+                Object instObj = cdAcc.getRawCooldowns().get(resourceIdentifier);
 
                 int now = cdAcc.getTickCount();
 
