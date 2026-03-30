@@ -33,10 +33,10 @@ public class DrenchedWings implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing {}", MOD_NAME);
-        ServerTickEvents.END_WORLD_TICK.register(world -> {
+        ServerTickEvents.END_SERVER_TICK.register(world -> {
             if (world.getGameRules().get(DO_ELYTRA_NERF)) {
-                for (ServerPlayer player : world.getPlayers(serverPlayer -> true)) {
-                    if (world.getGameRules().get(DISABLE_ELYTRA_IN_RAIN) && world.isRaining() && world.canSeeSky(player.blockPosition())) {
+                for (ServerPlayer player : world.getPlayerList().getPlayers()) {
+                    if (world.getGameRules().get(DISABLE_ELYTRA_IN_RAIN) && world.overworld().isRaining() && world.overworld().canSeeSky(player.blockPosition())) {
                         player.getCooldowns().addCooldown(new ItemStack(Items.ELYTRA), COOLDOWN_SECONDS * 20);
                     }
                     if (world.getGameRules().get(DISABLE_ELYTRA_IN_WATER) && player.isInWater()) {
