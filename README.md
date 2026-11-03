@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> **This repository has been archived.**  
+> Ongoing development of **Drenched Wings** for Minecraft 26.1+ has moved to the monorepo: [**StrangeQuark-Mods**](https://github.com/Strange-Quark-007/StrangeQuark-Mods).
+
 # Drenched Wings
 
 Minecraft Fabric mod that blocks elytra use in liquids, applies environmental penalties, and enforces cooldowns.
